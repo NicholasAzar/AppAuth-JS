@@ -86,14 +86,17 @@ export class App {
     }, new NodeCrypto());
 
     log('Making authorization request ', configuration, request);
-    this.authorizationHandler.performAuthorizationRequest(configuration, request);
+    this.authorizationHandler.performAuthorizationRequest(configuration, request)
+      .catch(error => {
+        log('Something bad happened ', error);
+      });
   }
 
   makeRefreshTokenRequest(
       configuration: AuthorizationServiceConfiguration,
       request: AuthorizationRequest,
       response: AuthorizationResponse) {
-    
+
     let extras: StringMap|undefined = undefined;
     if (request && request.internal) {
       extras = {};
